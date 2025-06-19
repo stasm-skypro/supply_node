@@ -1,4 +1,12 @@
 # supply/models.py
+"""
+✅ Особенности:
+Один класс Node описывает все типы звеньев, а уровень вычисляется через get_level()
+Продукты (Product) привязаны к узлу
+Можно легко фильтровать узлы по уровню, поставщику и т.д.
+Удаление поставщика не приводит к удалению клиентов — просто supplier = NULL
+"""
+
 from django.db import models
 
 
@@ -25,15 +33,15 @@ class Node(models.Model):
     """
 
     # Исключаем ругательства mypy о типизации, добавляя '# type: ignore[var-annotated]'
-    name = models.CharField(max_length=255, unique=True, null=False, blank=False)  # type: ignore[var-annotated]
+    name = models.CharField(max_length=255, unique=True)  # type: ignore[var-annotated]
 
     # -- Контактная информация --
-    email = models.EmailField(unique=True, null=False, blank=False)  # type: ignore[var-annotated]
-    phone = models.CharField(max_length=20, unique=True, null=False, blank=False)  # type: ignore[var-annotated]
-    country = models.CharField(max_length=100, null=False, blank=False)  # type: ignore[var-annotated]
-    city = models.CharField(max_length=100, null=False, blank=False)  # type: ignore[var-annotated]
-    street = models.CharField(max_length=100, null=False, blank=False)  # type: ignore[var-annotated]
-    building_number = models.CharField(max_length=20, null=False, blank=False)  # type: ignore[var-annotated]
+    email = models.EmailField(unique=True)  # type: ignore[var-annotated]
+    phone = models.CharField(max_length=20, unique=True)  # type: ignore[var-annotated]
+    country = models.CharField(max_length=100)  # type: ignore[var-annotated]
+    city = models.CharField(max_length=100)  # type: ignore[var-annotated]
+    street = models.CharField(max_length=100)  # type: ignore[var-annotated]
+    building_number = models.CharField(max_length=20)  # type: ignore[var-annotated]
 
     # -- Поставщик (самореференсное поле) --
     supplier = models.ForeignKey(
@@ -79,4 +87,45 @@ class Node(models.Model):
 
         verbose_name = "Узел сети поставок"
         verbose_name_plural = "Узлы сети поставок"
+        ordering = ["name"]
+
+
+class Product(models.Model):
+    """
+    Модель продукта.
+
+    Атрибуты:
+    - id (int): Уникальный идентификатор
+    - name (str): Название продукта
+    - model (str): Модель
+    - release_date (datetime): Дата выхода на рынок
+    """
+
+    # Исключаем ругательства mypy о типизации, добавляя '# type: ignore[var-annotated]'
+    name = models.CharField(max_length=255)  # type: ignore[var-annotated]
+    model = models.CharField(max_length=100)  # type: ignore[var-annotated]
+    release_date = models.DateField()  # type: ignore[var-annotated]
+
+    # Владелец продукта — узел сети
+    owner = models.ForeignKey(Node, on_delete=models.CASCADE, related_name="products")  # type: ignore[var-annotated]
+
+    def __str__(self):
+        """
+        Возвращает строковое представление продукта.
+        :return: Строка, содержащая имя и модель продукта.
+        """
+        return f"{self.name} ({self.model})"
+
+    class Meta:
+        """
+        Класс метаданных для модели Product.
+
+        Атрибуты:
+        - verbose_name: Имя модели в единственном числе.
+        - verbose_name_plural: Имя модели во множественном числе.
+        - ordering: Порядок сортировки продуктов по имени.
+        """
+
+        verbose_name = "Продукт"
+        verbose_name_plural = "Продукты"
         ordering = ["name"]
