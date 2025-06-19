@@ -1,7 +1,11 @@
 -r base.txt
+flake8
+mypy
 black
-ruff
+isort
+django-stubs
 pytest
 pytest-django
+pytest-cov
 ipython
-django-debug-toolbar
+pre_commit
