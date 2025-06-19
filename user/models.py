@@ -179,7 +179,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         "phone",
     ]  # поля, требуемые при создании пользователя (кроме email и пароля)
 
-    id: int  # Для mypy
+    id: int  # Для mypy, чтобы не требовал аннотаций
 
     def __str__(self):
         """
