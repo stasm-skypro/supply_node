@@ -4,16 +4,16 @@ Django settings for config project.
 
 from pathlib import Path
 
+from config.utils import get_env
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-chs5p&51+(#0x)xg3f_2$ue$nil9t#3ik6e=3k*ltq=ha&=5is"
+SECRET_KEY = get_env("SECRET_KEY", True)
+DEBUG = get_env("DJANGO_DEBUG", default=False) == "True"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ["*"]
+hosts = get_env("DJANGO_ALLOWED_HOSTS", default="localhost")
+ALLOWED_HOSTS = [host.strip() for host in hosts.split(",")] if hosts else []
 
 
 # Application definition
@@ -67,30 +67,23 @@ DATABASES = {
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Almaty"
 USE_I18N = True
 USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
