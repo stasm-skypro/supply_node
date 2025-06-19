@@ -15,17 +15,17 @@ class Node(models.Model):
     Модель звена сети поставок.
 
     Атрибуты:
-    - id (int): Уникальный идентификатор.
-    - name (str): Название звена.
-    - email (str): Email-адрес.
-    - phone (str): Телефон.
-    - country (str): Страна.
-    - city (str): Город.
-    - street (str): Улица.
-    - building_number (str): Номер дома.
-    - supplier (Node): Ссылка на другого узла (поставщика); может быть null только у завода.
-    - debt_to_supplier (Decimal): Задолженность перед поставщиком (с точностью до копеек).
-    - created_at (datetime): Дата и время создания записи (заполняется автоматически).
+    - id (int): Уникальный идентификатор
+    - name (str): Название звена
+    - email (str): Email-адрес
+    - phone (str): Телефон
+    - country (str): Страна
+    - city (str): Город
+    - street (str): Улица
+    - building_number (str): Номер дома
+    - supplier (Node): Ссылка на другого узла (поставщика); может быть null только у завода
+    - debt_to_supplier (Decimal): Задолженность перед поставщиком (с точностью до копеек)
+    - created_at (datetime): Дата и время создания записи (заполняется автоматически)
 
     Связи:
     - supplier — self-relation (ForeignKey на Node)
