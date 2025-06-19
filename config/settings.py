@@ -16,8 +16,6 @@ DEBUG = get_env("DJANGO_DEBUG", default=False) == "True"
 hosts = get_env("DJANGO_ALLOWED_HOSTS", default="localhost")
 ALLOWED_HOSTS = [host.strip() for host in hosts.split(",")] if hosts else []
 
-
-# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -56,8 +54,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
-# Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -72,8 +68,6 @@ DATABASES = {
 if "pytest" in sys.argv[0]:
     DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}
 
-
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -81,21 +75,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
-# Internationalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Asia/Almaty"
 USE_I18N = True
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
 
-
-# Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 # Настройка CORS - домены, которым разрешён доступ
 CORS_ALLOW_ALL_ORIGINS = False
