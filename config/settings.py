@@ -2,6 +2,7 @@
 Django settings for config project.
 """
 
+import sys
 from pathlib import Path
 
 from config.utils import get_env
@@ -67,6 +68,9 @@ DATABASES = {
         "PORT": get_env("DB_PORT", required=True),
     }
 }
+# Настройка лёгкой БД для тестов
+if "pytest" in sys.argv[0]:
+    DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}
 
 
 # Password validation
