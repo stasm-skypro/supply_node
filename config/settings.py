@@ -23,7 +23,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-]
+]  # -- Стоковые приложения
+INSTALLED_APPS += [
+    "supply",
+    "user",
+]  # -- Пользовательские приложения
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
