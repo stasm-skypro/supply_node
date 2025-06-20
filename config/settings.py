@@ -7,9 +7,7 @@ from pathlib import Path
 
 from config.utils import get_env
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 SECRET_KEY = get_env("SECRET_KEY", True)
 DEBUG = get_env("DJANGO_DEBUG", default=False) == "True"
 
@@ -68,7 +66,7 @@ DATABASES = {
         "PORT": get_env("DB_PORT", required=True),
     }
 }
-# Настройка лёгкой БД для тестов
+# -- Настройка лёгкой БД для тестов
 if "pytest" in sys.argv[0]:
     DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}
 
@@ -88,7 +86,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Настройка CORS - домены, которым разрешён доступ
+AUTH_USER_MODEL = "user.User"  # -- Используемая модель пользователя
+
+# -- Настройка CORS - домены, которым разрешён доступ к бэкенду
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
-CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]

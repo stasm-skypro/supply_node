@@ -1,0 +1,87 @@
+[
+  {
+    "model": "yourapp.user",
+    "pk": 1,
+    "fields": {
+      "first_name": "Иван",
+      "last_name": "Иванов",
+      "phone": "+71234567890",
+      "email": "ivanov@example.com",
+      "role": "admin",
+      "image": "",
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true,
+      "last_login": null,
+      "date_joined": "2025-06-18T10:00:00"
+    }
+  },
+  {
+    "model": "yourapp.user",
+    "pk": 2,
+    "fields": {
+      "first_name": "Ольга",
+      "last_name": "Петрова",
+      "phone": "+79870001122",
+      "email": "petrova@example.com",
+      "role": "user",
+      "image": "",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-06-18T10:05:00"
+    }
+  },
+  {
+    "model": "yourapp.user",
+    "pk": 3,
+    "fields": {
+      "first_name": "Алексей",
+      "last_name": "Сидоров",
+      "phone": "+79031234567",
+      "email": "sidorov@example.com",
+      "role": "user",
+      "image": "",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-06-18T10:10:00"
+    }
+  },
+  {
+    "model": "yourapp.user",
+    "pk": 4,
+    "fields": {
+      "first_name": "Мария",
+      "last_name": "Кузнецова",
+      "phone": "+77778889900",
+      "email": "kuznetsova@example.com",
+      "role": "user",
+      "image": "",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-06-18T10:15:00"
+    }
+  },
+  {
+    "model": "yourapp.user",
+    "pk": 5,
+    "fields": {
+      "first_name": "Ермек",
+      "last_name": "Жумабаев",
+      "phone": "+77012345678",
+      "email": "ermek@example.com",
+      "role": "user",
+      "image": "",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": null,
+      "date_joined": "2025-06-18T10:20:00"
+    }
+  }
+]
