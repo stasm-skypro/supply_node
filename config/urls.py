@@ -5,7 +5,7 @@ URL configuration for config project.
 
 from django.contrib import admin
 from django.http import HttpResponseRedirect
-from django.urls import path
+from django.urls import include, path
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -33,4 +33,9 @@ urlpatterns = [
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     # -- Чтобы при заходе на / не было 404, редирект на /doc/
     path("", lambda request: HttpResponseRedirect("doc/")),
+    # -- User URL-s
+    path("user/", include("user.urls", namespace="user")),
+    path("api-auth/", include("rest_framework.urls")),  # login/logout через API в браузере
+    # -- Supply URL-s
+    path("supply/", include("supply.urls", namespace="supply")),
 ]
