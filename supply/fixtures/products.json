@@ -1,102 +1,102 @@
 [
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 1,
     "fields": {
       "name": "Смартфон Lux A1",
       "model": "A1",
       "release_date": "2024-03-01",
-      "owner_node": 1
+      "owner": 1
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 2,
     "fields": {
       "name": "Смартфон Lux A1",
       "model": "A1",
       "release_date": "2024-04-01",
-      "owner_node": 2
+      "owner": 2
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 3,
     "fields": {
       "name": "Ноутбук LuxBook Z",
       "model": "Z2024",
       "release_date": "2024-02-15",
-      "owner_node": 1
+      "owner": 1
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 4,
     "fields": {
       "name": "Телевизор LuxTV 50",
       "model": "50UHD",
       "release_date": "2023-11-30",
-      "owner_node": 3
+      "owner": 3
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 5,
     "fields": {
       "name": "Пылесос LuxClean V",
       "model": "VC100",
       "release_date": "2023-09-20",
-      "owner_node": 1
+      "owner": 1
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 6,
     "fields": {
       "name": "Планшет LuxTab",
       "model": "T10",
       "release_date": "2024-05-01",
-      "owner_node": 4
+      "owner": 4
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 7,
     "fields": {
       "name": "Умные часы LuxWatch",
       "model": "W2024",
       "release_date": "2024-01-10",
-      "owner_node": 6
+      "owner": 6
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 8,
     "fields": {
       "name": "Смартфон Lux A1",
       "model": "A1",
       "release_date": "2024-03-01",
-      "owner_node": 8
+      "owner": 8
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 9,
     "fields": {
       "name": "Ноутбук LuxBook Z",
       "model": "Z2024",
       "release_date": "2024-02-15",
-      "owner_node": 9
+      "owner": 9
     }
   },
   {
-    "model": "yourapp.product",
+    "model": "supply.product",
     "pk": 10,
     "fields": {
       "name": "Телевизор LuxTV 43",
       "model": "43FHD",
       "release_date": "2023-07-01",
-      "owner_node": 10
+      "owner": 10
     }
   }
 ]

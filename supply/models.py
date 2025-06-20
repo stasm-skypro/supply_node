@@ -33,26 +33,32 @@ class Node(models.Model):
     """
 
     # Исключаем ругательства mypy о типизации, добавляя '# type: ignore[var-annotated]'
-    name = models.CharField(max_length=255, unique=True)  # type: ignore[var-annotated]
+    name = models.CharField(
+        max_length=255, unique=True, verbose_name="Название узла поставки"
+    )  # type: ignore[var-annotated]
 
     # -- Контактная информация --
-    email = models.EmailField(unique=True)  # type: ignore[var-annotated]
-    phone = models.CharField(max_length=20, unique=True)  # type: ignore[var-annotated]
-    country = models.CharField(max_length=100)  # type: ignore[var-annotated]
-    city = models.CharField(max_length=100)  # type: ignore[var-annotated]
-    street = models.CharField(max_length=100)  # type: ignore[var-annotated]
-    building_number = models.CharField(max_length=20)  # type: ignore[var-annotated]
+    email = models.EmailField(unique=True, verbose_name="Электронная почта")  # type: ignore[var-annotated]
+    phone = models.CharField(max_length=20, unique=True, verbose_name="Номер телефона")  # type: ignore[var-annotated]
+    country = models.CharField(max_length=100, verbose_name="Страна")  # type: ignore[var-annotated]
+    city = models.CharField(max_length=100, verbose_name="Город")  # type: ignore[var-annotated]
+    street = models.CharField(max_length=100, verbose_name="Улица")  # type: ignore[var-annotated]
+    building_number = models.CharField(max_length=20, verbose_name="Номер дома")  # type: ignore[var-annotated]
 
     # -- Поставщик (самореференсное поле) --
     supplier = models.ForeignKey(
-        "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="clients"
+        "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="clients", verbose_name="Поставщик"
     )  # type: ignore[var-annotated]
 
     # -- Задолженность --
-    debt_to_supplier = models.DecimalField(max_digits=12, decimal_places=2, default=0)  # type: ignore[var-annotated]
+    debt_to_supplier = models.DecimalField(
+        max_digits=12, decimal_places=2, default=0, verbose_name="Задолженность"
+    )  # type: ignore[var-annotated]
 
     # -- Дата и время создания записи --
-    created_at = models.DateTimeField(auto_now_add=True)  # type: ignore[var-annotated]
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата и время создания"
+    )  # type: ignore[var-annotated]
 
     def __str__(self):
         """
@@ -102,12 +108,14 @@ class Product(models.Model):
     """
 
     # Исключаем ругательства mypy о типизации, добавляя '# type: ignore[var-annotated]'
-    name = models.CharField(max_length=255)  # type: ignore[var-annotated]
-    model = models.CharField(max_length=100)  # type: ignore[var-annotated]
-    release_date = models.DateField()  # type: ignore[var-annotated]
+    name = models.CharField(max_length=255, verbose_name="Название продукта")  # type: ignore[var-annotated]
+    model = models.CharField(max_length=100, verbose_name="Модель")  # type: ignore[var-annotated]
+    release_date = models.DateField(verbose_name="Дата выхода на рынок")  # type: ignore[var-annotated]
 
     # Владелец продукта — узел сети
-    owner = models.ForeignKey(Node, on_delete=models.CASCADE, related_name="products")  # type: ignore[var-annotated]
+    owner = models.ForeignKey(
+        Node, on_delete=models.CASCADE, related_name="products", verbose_name="Владелец - поставщик"
+    )  # type: ignore[var-annotated]
 
     def __str__(self):
         """

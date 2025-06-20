@@ -1,6 +1,6 @@
 [
   {
-    "model": "yourapp.user",
+    "model": "user.user",
     "pk": 1,
     "fields": {
       "first_name": "Иван",
@@ -10,14 +10,14 @@
       "role": "admin",
       "image": "",
       "is_active": true,
-      "is_staff": true,
-      "is_superuser": true,
-      "last_login": null,
-      "date_joined": "2025-06-18T10:00:00"
+      "is_staff": false,
+      "is_superuser": false,
+      "last_login": "2025-06-18T10:00:00",
+      "date_joined": "2025-06-08T09:00:00"
     }
   },
   {
-    "model": "yourapp.user",
+    "model": "user.user",
     "pk": 2,
     "fields": {
       "first_name": "Ольга",
@@ -29,12 +29,12 @@
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
-      "last_login": null,
-      "date_joined": "2025-06-18T10:05:00"
+      "last_login": "2025-06-19T10:05:00",
+      "date_joined": "2025-06-08T10:05:00"
     }
   },
   {
-    "model": "yourapp.user",
+    "model": "user.user",
     "pk": 3,
     "fields": {
       "first_name": "Алексей",
@@ -46,12 +46,12 @@
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
-      "last_login": null,
-      "date_joined": "2025-06-18T10:10:00"
+      "last_login": "2025-06-20T10:10:00",
+      "date_joined": "2025-06-01T10:10:00"
     }
   },
   {
-    "model": "yourapp.user",
+    "model": "user.user",
     "pk": 4,
     "fields": {
       "first_name": "Мария",
@@ -63,12 +63,12 @@
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
-      "last_login": null,
-      "date_joined": "2025-06-18T10:15:00"
+      "last_login": "2025-06-18T15:10:00",
+      "date_joined": "2025-05-18T10:15:00"
     }
   },
   {
-    "model": "yourapp.user",
+    "model": "user.user",
     "pk": 5,
     "fields": {
       "first_name": "Ермек",
@@ -80,8 +80,8 @@
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
-      "last_login": null,
-      "date_joined": "2025-06-18T10:20:00"
+      "last_login": "2025-06-19T10:20:00",
+      "date_joined": "2025-05-18T10:20:00"
     }
   }
 ]

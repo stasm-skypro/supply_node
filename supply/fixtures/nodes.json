@@ -1,6 +1,6 @@
 [
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 1,
     "fields": {
       "name": "Завод \"ЭлектроЛюкс\"",
@@ -16,7 +16,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 2,
     "fields": {
       "name": "ИП Иванов",
@@ -32,7 +32,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 3,
     "fields": {
       "name": "Розница \"ТехноДом\"",
@@ -48,7 +48,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 4,
     "fields": {
       "name": "Розница \"МегаТех\"",
@@ -64,7 +64,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 5,
     "fields": {
       "name": "ИП Сидоров",
@@ -80,7 +80,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 6,
     "fields": {
       "name": "ИП Ермек",
@@ -96,7 +96,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 7,
     "fields": {
       "name": "Розница \"ЭлектроСити\"",
@@ -112,7 +112,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 8,
     "fields": {
       "name": "ИП Петрова",
@@ -128,7 +128,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 9,
     "fields": {
       "name": "Розница \"ГлобалТех\"",
@@ -144,7 +144,7 @@
     }
   },
   {
-    "model": "yourapp.node",
+    "model": "supply.node",
     "pk": 10,
     "fields": {
       "name": "ИП Асанов",
