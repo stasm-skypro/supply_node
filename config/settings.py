@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]  # -- Стоковые приложения
-INSTALLED_APPS += ["rest_framework", "drf_yasg"]  # -- Сторонние приложения
+INSTALLED_APPS += ["rest_framework", "drf_yasg", "corsheaders"]  # -- Сторонние приложения
 INSTALLED_APPS += ["supply", "user"]  # -- Пользовательские приложения
 
 MIDDLEWARE = [

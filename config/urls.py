@@ -4,6 +4,7 @@ URL configuration for config project.
 """
 
 from django.contrib import admin
+from django.http import HttpResponseRedirect
 from django.urls import path
 
 from drf_yasg import openapi
@@ -14,7 +15,7 @@ schema_view = get_schema_view(
     openapi.Info(
         title="API Documentation",
         default_version="v1",
-        description="API Documentation for Bulletin Board",
+        description="API Documentation for Supply Node",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="stasm226@gmail.com"),
         license=openapi.License(name="BSD License"),
@@ -30,4 +31,6 @@ urlpatterns = [
     path("doc/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("docjson/", schema_view.without_ui(cache_timeout=0), name="schema-json"),  # API без UI
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    # -- Чтобы при заходе на / не было 404, редирект на /doc/
+    path("", lambda request: HttpResponseRedirect("doc/")),
 ]
