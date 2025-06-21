@@ -70,7 +70,7 @@ class EmailTokenObtainPairView(TokenObtainPairView):
     """
     Авторизация пользователя по email и паролю
 
-    Клиент отправляет POST-запрос на эндпоинт регистрации /register/,
+    Клиент отправляет POST-запрос на эндпоинт аутентификации /login/,
     передавая JSON:
     {
         "email": "user@example.com",
