@@ -50,9 +50,8 @@ class RegisterAPIView(CreateAPIView):
         """
         Обрабатывает POST-запрос на создание нового объекта
 
-        Метод вызывается при отправке POST-запроса к API-представлению,
-        основанному на CreateAPIView. Валидирует входные данные, сохраняет
-        новый объект и возвращает ответ с данными или сообщением.
+        Метод вызывается при отправке POST-запроса к API-представлению, основанному на CreateAPIView.
+        Валидирует входные данные, сохраняет новый объект и возвращает ответ с данными или сообщением.
 
         :param request: HTTP-запрос, содержащий входные данные (обычно JSON)
         :type request: rest_framework->request->Request
@@ -68,6 +67,21 @@ class RegisterAPIView(CreateAPIView):
 
 
 class EmailTokenObtainPairView(TokenObtainPairView):
-    """ """
+    """
+    Авторизация пользователя по email и паролю
+
+    Клиент отправляет POST-запрос на эндпоинт регистрации /register/,
+    передавая JSON:
+    {
+        "email": "user@example.com",
+        "password": "secure1234",
+    }
+
+     API возвращает успешный ответ:
+    {
+        "refresh": "eyJ...",
+        "access": "eyJ..."
+    }
+    """
 
     serializer_class = EmailTokenObtainPairSerializer  # type: ignore[assignment]

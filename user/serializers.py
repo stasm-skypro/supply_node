@@ -58,6 +58,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class EmailTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Сериализатор для переопределения username на email
+    """
+
     username_field = "email"
 
 
