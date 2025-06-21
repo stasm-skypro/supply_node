@@ -6,6 +6,8 @@ from user.models import User
 
 
 class Command(BaseCommand):
+    help = "Загружает фикстуры пользователей в базу данных"
+
     def handle(self, *args, **kwargs):
         if User.objects.count() == 0:
             self.stdout.write("Loading fixtures...")

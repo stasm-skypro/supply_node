@@ -6,6 +6,8 @@ from supply.models import Node, Product
 
 
 class Command(BaseCommand):
+    help = "Загружает фикстуры узлов сети и продуктов в базу данных"
+
     def handle(self, *args, **kwargs):
         if Node.objects.count() == 0:
             self.stdout.write("Loading node fixture...")
