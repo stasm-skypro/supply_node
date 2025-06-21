@@ -1,10 +1,16 @@
 # supply/models.py
 """
-✅ Особенности:
-Один класс Node описывает все типы звеньев, а уровень вычисляется через get_level()
-Продукты (Product) привязаны к узлу
-Можно легко фильтровать узлы по уровню, поставщику и т.д.
-Удаление поставщика не приводит к удалению клиентов — просто supplier = NULL
+Модели для приложения 'supply'.
+
+Этот модуль определяет модели Django для представления звеньев сети поставок (Node)
+и продуктов (Product), которые они производят или продают.
+
+Ключевые особенности:
+- Один класс Node описывает все типы звеньев, а уровень вычисляется через get_level().
+- Иерархическая структура сети моделируется через самореферентную связь в модели `Node`.
+- Уровень звена в иерархии (завод, розничная сеть и т.д.) вычисляется динамически.
+- Продукты связаны с конкретным звеном сети.
+- Удаление поставщика не каскадное, а устанавливает связь в `NULL`.
 """
 
 from django.db import models
@@ -12,24 +18,31 @@ from django.db import models
 
 class Node(models.Model):
     """
-    Модель звена сети поставок
+    Модель звена сети поставок.
 
-    Атрибуты:
-    - id (int): Уникальный идентификатор
-    - name (str): Название звена
-    - email (str): Email-адрес
-    - phone (str): Телефон
-    - country (str): Страна
-    - city (str): Город
-    - street (str): Улица
-    - building_number (str): Номер дома
-    - supplier (Node): Ссылка на другого узла (поставщика); может быть null только у завода
-    - debt_to_supplier (Decimal): Задолженность перед поставщиком (с точностью до копеек)
-    - created_at (datetime): Дата и время создания записи (заполняется автоматически)
+    Представляет собой элемент в иерархической структуре сети, будь то завод,
+    розничная сеть или индивидуальный предприниматель.
 
-    Связи:
-    - supplier — self-relation (ForeignKey на Node)
-    Один NetworkNode может иметь много клиентов (дочерних узлов), но только одного поставщика
+    :param name: Название звена.
+    :type name: str
+    :param email: Email-адрес.
+    :type email: str
+    :param phone: Телефон.
+    :type phone: str
+    :param country: Страна.
+    :type country: str
+    :param city: Город.
+    :type city: str
+    :param street: Улица.
+    :type street: str
+    :param building_number: Номер дома.
+    :type building_number: str
+    :param supplier: Ссылка на поставщика (другой узел). Может быть ``None`` для завода (уровень 0).
+    :type supplier: Node or None
+    :param debt_to_supplier: Задолженность перед поставщиком.
+    :type debt_to_supplier: decimal.Decimal
+    :param created_at: Дата и время создания записи (устанавливается автоматически).
+    :type created_at: datetime.datetime
     """
 
     # Исключаем ругательства mypy о типизации, добавляя '# type: ignore[var-annotated]'
@@ -45,7 +58,7 @@ class Node(models.Model):
     street = models.CharField(max_length=100, verbose_name="Улица")  # type: ignore[var-annotated]
     building_number = models.CharField(max_length=20, verbose_name="Номер дома")  # type: ignore[var-annotated]
 
-    # -- Поставщик (самореференсное поле) --
+    # -- Поставщик (самореферентное поле) --
     supplier = models.ForeignKey(
         "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="clients", verbose_name="Поставщик"
     )  # type: ignore[var-annotated]
@@ -60,19 +73,26 @@ class Node(models.Model):
         auto_now_add=True, verbose_name="Дата и время создания"
     )  # type: ignore[var-annotated]
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
-        Возвращает строковое представление узла сети поставок
-        :return: Строка, содержащая имя узла.
+        Возвращает строковое представление узла сети поставок.
+
+        :return: Название узла.
+        :rtype: str
         """
         return self.name
 
-    def get_level(self):
+    def get_level(self) -> int:
         """
-        Вычисляет уровень звена в иерархии:
-        0 — если нет поставщика (завод)
-        1 — если поставщик — завод
-        2 — и т.д.
+        Вычисляет уровень звена в иерархии.
+
+        Уровень определяется количеством звеньев в цепочке до завода.
+        - 0: Завод (нет поставщика).
+        - 1: Поставщик — завод.
+        - 2: Поставщик — звено 1-го уровня, и т.д.
+
+        :return: Целочисленное значение уровня.
+        :rtype: int
         """
         level = 0
         node = self
@@ -83,12 +103,11 @@ class Node(models.Model):
 
     class Meta:
         """
-        Класс метаданных для модели NetworkNode
+        Мета-опции для модели Node.
 
-        Атрибуты:
-        - verbose_name: Имя модели в единственном числе
-        - verbose_name_plural: Имя модели во множественном числе
-        - ordering: Порядок сортировки узлов по имени
+        :ivar verbose_name: Имя модели в единственном числе для отображения в админ-панели.
+        :ivar verbose_name_plural: Имя модели во множественном числе.
+        :ivar ordering: Порядок сортировки по умолчанию для запросов.
         """
 
         verbose_name = "Узел сети поставок"
@@ -100,11 +119,16 @@ class Product(models.Model):
     """
     Модель продукта.
 
-    Атрибуты:
-    - id (int): Уникальный идентификатор
-    - name (str): Название продукта
-    - model (str): Модель
-    - release_date (datetime): Дата выхода на рынок
+    Представляет продукт, который производится или продается звеном сети.
+
+    :param name: Название продукта.
+    :type name: str
+    :param model: Модель продукта.
+    :type model: str
+    :param release_date: Дата выхода продукта на рынок.
+    :type release_date: datetime.date
+    :param owner: Звено сети, которому принадлежит продукт.
+    :type owner: Node
     """
 
     # Исключаем ругательства mypy о типизации, добавляя '# type: ignore[var-annotated]'
@@ -117,21 +141,22 @@ class Product(models.Model):
         Node, on_delete=models.CASCADE, related_name="products", verbose_name="Поставщик"
     )  # type: ignore[var-annotated]
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
-        Возвращает строковое представление продукта
-        :return: Строка, содержащая имя и модель продукта
+        Возвращает строковое представление продукта.
+
+        :return: Строка в формате "Название (Модель)".
+        :rtype: str
         """
         return f"{self.name} ({self.model})"
 
     class Meta:
         """
-        Класс метаданных для модели Product
+        Мета-опции для модели Product.
 
-        Атрибуты:
-        - verbose_name: Имя модели в единственном числе
-        - verbose_name_plural: Имя модели во множественном числе
-        - ordering: Порядок сортировки продуктов по имени
+        :ivar verbose_name: Имя модели в единственном числе для отображения в админ-панели.
+        :ivar verbose_name_plural: Имя модели во множественном числе.
+        :ivar ordering: Порядок сортировки по умолчанию для запросов.
         """
 
         verbose_name = "Продукт"
