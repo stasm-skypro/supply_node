@@ -3,12 +3,15 @@ Django settings for config project.
 """
 
 import sys
+from datetime import timedelta
 from pathlib import Path
 
 from config.utils import get_env
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = get_env("SECRET_KEY", True)
+
+SECRET_KEY = get_env("DJANGO_SECRET_KEY", required=True)
+
 DEBUG = get_env("DJANGO_DEBUG", default=False) == "True"
 
 hosts = get_env("DJANGO_ALLOWED_HOSTS", default="localhost")
@@ -22,7 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]  # -- Стоковые приложения
-INSTALLED_APPS += ["rest_framework", "drf_yasg", "corsheaders"]  # -- Сторонние приложения
+INSTALLED_APPS += ["rest_framework", "rest_framework_simplejwt", "drf_yasg", "corsheaders"]  # -- Сторонние приложения
 INSTALLED_APPS += ["supply", "user"]  # -- Пользовательские приложения
 
 MIDDLEWARE = [
@@ -34,6 +37,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+MIDDLEWARE += ["corsheaders.middleware.CorsMiddleware"]  # -- Сторонние приложения
 
 ROOT_URLCONF = "config.urls"
 
@@ -90,3 +94,25 @@ AUTH_USER_MODEL = "user.User"  # -- Используемая модель пол
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+
+# -- Настройка Django Rest Framework
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    # -- Настройка прав доступа для всех контроллеров
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",  # -- Обязательная аутентификация
+    ],
+    # -- Настройка сериализаторов DRF browsable API
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+}
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}

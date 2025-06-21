@@ -10,7 +10,6 @@ class UserAdmin(admin.ModelAdmin):
         "phone",
         "first_name",
         "last_name",
-        "image",
         "role",
         "is_active",
         "is_staff",
