@@ -14,7 +14,7 @@ class NodeCreateAPIView(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
-# -- LIST with filtering by country
+# -- LIST с фильтрацией по стране
 class NodeListAPIView(generics.ListAPIView):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
@@ -30,7 +30,7 @@ class NodeRetrieveAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
 
-# -- UPDATE (with restriction on `debt_to_supplier`)
+# -- UPDATE (с запретом на обновление поля 'debt_to_supplier')
 class NodeUpdateAPIView(generics.UpdateAPIView):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer

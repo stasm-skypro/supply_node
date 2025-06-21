@@ -37,5 +37,5 @@ urlpatterns = [
     path("user/", include("user.urls", namespace="user")),
     path("api-auth/", include("rest_framework.urls")),  # login/logout через API в браузере
     # -- Supply URL-s
-    # path("supply/", include("supply.urls", namespace="supply")),
+    path("supply/", include("supply.urls", namespace="supply")),
 ]
