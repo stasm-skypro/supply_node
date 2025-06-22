@@ -133,3 +133,6 @@ SWAGGER_SETTINGS = {
         }
     },
 }
+
+# Убирает предупреждение в консоли при запуске pytest - теперь (без точки): GET /swaggerjson
+SWAGGER_USE_COMPAT_RENDERERS = False
