@@ -16,16 +16,19 @@ class RegisterAPIView(CreateAPIView):
 
     Клиент отправляет POST-запрос на эндпоинт регистрации /register/,
     передавая JSON:
+    ``json
     {
         "email": "user@example.com",
         "password": "secure1234",
         "password_confirmation": "secure1234"
-    }
+    }``
 
     API возвращает успешный ответ:
+    ``json
     {
         "message": "Регистрация пользователя user@example.com прошла успешно."
     }
+    ``
     """
 
     serializer_class = RegisterSerializer
@@ -72,16 +75,20 @@ class EmailTokenObtainPairView(TokenObtainPairView):
 
     Клиент отправляет POST-запрос на эндпоинт аутентификации /login/,
     передавая JSON:
+    ``json
     {
         "email": "user@example.com",
         "password": "secure1234",
     }
+    ``
 
      API возвращает успешный ответ:
+     ``json
     {
         "refresh": "eyJ...",
         "access": "eyJ..."
     }
+    ``
     """
 
     serializer_class = EmailTokenObtainPairSerializer  # type: ignore[assignment]
