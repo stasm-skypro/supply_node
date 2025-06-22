@@ -10,21 +10,32 @@ from user.models import User
 @pytest.mark.django_db
 class TestUserRegistration:
     """
-    Тесты для регистрации пользователя.
+    Набор тестов для регистрации пользователя.
+
+    Содержит интеграционные тесты для эндпоинта регистрации пользователя.
+
+    Эндпоинт: ``/user/register/``
     """
 
     def setup_method(self):
         """
-        Создание клиента и URL для регистрации пользователя.
-        :return:
+        Подготовка клиента и URL регистрации.
+
+        :return: None
         """
         self.client = APIClient()
         self.url = reverse("user:register")
 
     def test_successful_registration(self):
         """
-        Тест успешной регистрации пользователя.
-        :return:
+        Проверка успешной регистрации пользователя.
+
+        Отправляется корректный POST-запрос. Проверяется, что возвращается
+        статус 201 и пользователь сохраняется в базе данных.
+
+        :return: None
+        :rtype: None
+        :raises AssertionError: Если код ответа или данные в базе некорректны.
         """
         data = {
             "first_name": "Иван",
@@ -41,8 +52,14 @@ class TestUserRegistration:
 
     def test_duplicate_email(self):
         """
-        Тест на дублирование email.
-        :return:
+        Проверка регистрации с уже существующим email.
+
+        При попытке регистрации с email, который уже существует в базе,
+        ожидается ответ 400 BAD REQUEST.
+
+        :return: None
+        :rtype: None
+        :raises AssertionError: Если возвращается некорректный код ответа.
         """
         User.objects.create_user(
             email="test@example.com", password="secure1234", first_name="Иван", last_name="Иванов", phone="79999999999"
@@ -60,8 +77,14 @@ class TestUserRegistration:
 
     def test_password_mismatch(self):
         """
-        Тест на несовпадение паролей.
-        :return:
+        Проверка регистрации при несовпадении паролей.
+
+        Если пароль и подтверждение пароля не совпадают,
+        должен возвращаться ответ 400 BAD REQUEST с соответствующей ошибкой.
+
+        :return: None
+        :rtype: None
+        :raises AssertionError: Если код ответа или сообщение об ошибке некорректны.
         """
         data = {
             "first_name": "Мария",
@@ -79,13 +102,18 @@ class TestUserRegistration:
 @pytest.mark.django_db
 class TestUserLogin:
     """
-    Тесты для логина пользователя.
+    Набор тестов для входа пользователя (JWT-аутентификация).
+
+    Содержит тесты на получение access и refresh токенов.
+
+    Эндпоинт: ``/user/token/``
     """
 
     def setup_method(self):
         """
-        Создание клиента и URL для логина пользователя.
-        :return:
+        Подготовка клиента, URL входа и создание тестового пользователя.
+
+        :return: None
         """
         self.client = APIClient()
         self.url = reverse("user:token_obtain_pair")
@@ -95,8 +123,14 @@ class TestUserLogin:
 
     def test_successful_login(self):
         """
-        Тест успешного логина пользователя.
-        :return:
+        Проверка успешного входа пользователя.
+
+        Отправляется корректный email и пароль.
+        Ожидается ответ 200 OK и наличие токенов в ответе.
+
+        :return: None
+        :rtype: None
+        :raises AssertionError: Если отсутствуют токены или неверный код ответа.
         """
         data = {
             "email": "user@example.com",
@@ -109,8 +143,13 @@ class TestUserLogin:
 
     def test_login_invalid_credentials(self):
         """
-        Тест неверных учетных данных.
-        :return:
+        Проверка входа с неверными данными.
+
+        При вводе неправильного пароля должен вернуться статус 401 UNAUTHORIZED.
+
+        :return: None
+        :rtype: None
+        :raises AssertionError: Если возвращён неправильный код ответа.
         """
         data = {
             "email": "user@example.com",
