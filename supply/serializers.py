@@ -8,7 +8,7 @@
 """
 from rest_framework import serializers
 
-from supply.models import Node
+from supply.models import Node, Product
 
 
 class NodeSerializer(serializers.ModelSerializer):
@@ -58,3 +58,13 @@ class NodeSerializer(serializers.ModelSerializer):
         """
         validated_data.pop("debt_to_supplier", None)
         return super().update(instance, validated_data)
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    """
+    Сериализатор для модели Product.
+    """
+
+    class Meta:
+        model = Product
+        fields = "__all__"

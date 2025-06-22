@@ -8,10 +8,11 @@
 """
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
+from rest_framework.exceptions import NotFound
 from rest_framework.permissions import IsAuthenticated
 
-from supply.models import Node
-from supply.serializers import NodeSerializer
+from supply.models import Node, Product
+from supply.serializers import NodeSerializer, ProductSerializer
 
 
 # -- CREATE
@@ -114,3 +115,151 @@ class NodeDestroyAPIView(generics.DestroyAPIView):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
     permission_classes = [IsAuthenticated]
+
+
+class ProductCreateAPI(generics.CreateAPIView):
+    """
+    Представление для создания нового продукта.
+
+    Обрабатывает POST-запросы для создания экземпляров :class:`supply.models.Product`.
+    Наследуется от :class:`rest_framework.generics.CreateAPIView`.
+
+    Требует аутентификации пользователя.
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ProductListAPI(generics.ListAPIView):
+    """
+    Представление для получения списка всех продуктов.
+
+    Обрабатывает GET-запросы для получения списка экземпляров :class:`supply.models.Product`.
+    Поддерживает фильтрацию по полю ``owner`` (узел-владелец).
+
+    Наследуется от :class:`rest_framework.generics.ListAPIView`.
+
+    Требует аутентификации пользователя.
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["owner"]
+
+
+class ProductRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    Представление для получения одного продукта.
+
+    Обрабатывает GET-запросы для получения экземпляра :class:`supply.models.Product` по его ``pk``.
+    Наследуется от :class:`rest_framework.generics.RetrieveAPIView`.
+
+    Требует аутентификации пользователя.
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ProductUpdateAPIView(generics.UpdateAPIView):
+    """
+    Представление для обновления продукта.
+
+    Обрабатывает PUT/PATCH-запросы для изменения экземпляра :class:`supply.models.Product`.
+    Наследуется от :class:`rest_framework.generics.UpdateAPIView`.
+
+    Требует аутентификации пользователя.
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ProductDestroyAPIView(generics.DestroyAPIView):
+    """
+    Представление для удаления продукта.
+
+    Обрабатывает DELETE-запросы для удаления экземпляра :class:`supply.models.Product`.
+    Наследуется от :class:`rest_framework.generics.DestroyAPIView`.
+
+    Требует аутентификации пользователя.
+    """
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class NodeProductListAPIView(generics.ListAPIView):
+    """
+    Представление для получения списка продуктов, принадлежащих конкретному узлу сети.
+
+    Обрабатывает GET-запросы по адресу ``/nodes/{node_id}/products/``.
+    Возвращает список всех продуктов, у которых поле ``owner`` соответствует переданному ``node_id``.
+
+    Наследуется от :class:`rest_framework.generics.ListAPIView`.
+
+    Требует аутентификации пользователя.
+
+    :param node_id: Уникальный идентификатор узла, переданный в URL.
+    :type node_id: int
+    :raises NotFound: Если узел с переданным ``node_id`` не найден.
+    """
+
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Получает список продуктов, принадлежащих указанному узлу.
+        :return: Список продуктов.
+        """
+        node_id = self.kwargs.get("node_id")
+        print("node_id", node_id)
+        if not Node.objects.filter(pk=node_id).exists():
+            raise NotFound(f"Узел с id={node_id} не найден.")
+        return Product.objects.filter(owner_id=node_id)
+
+
+class NodeProductRetrieveAPIView(generics.RetrieveAPIView):
+    """
+    Представление для получения конкретного продукта, принадлежащего узлу.
+
+    Обрабатывает GET-запросы по адресу ``/nodes/{node_id}/products/{product_id}/``.
+    Возвращает объект продукта, если он принадлежит указанному узлу.
+
+    Наследуется от :class:`rest_framework.generics.RetrieveAPIView`.
+
+    Требует аутентификации пользователя.
+
+    :param node_id: Идентификатор узла, переданный в URL.
+    :type node_id: int
+    :param product_id: Идентификатор продукта, переданный в URL.
+    :type product_id: int
+    :raises NotFound: Если продукт с данным ``product_id`` не найден у узла с ``node_id``.
+    """
+
+    serializer_class = ProductSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        """
+        Получает продукт по его ID и ID узла.
+
+        :return: Экземпляр продукта, если найден.
+        :rtype: supply.models.Product
+        :raises NotFound: Если продукт не найден или не принадлежит указанному узлу.
+        """
+        node_id = self.kwargs.get("node_id")
+        product_id = self.kwargs.get("product_id")
+
+        try:
+            return Product.objects.get(pk=product_id, owner_id=node_id)
+        except Product.DoesNotExist:
+            raise NotFound(f"Продукт с id={product_id} у узла id={node_id} не найден.")
