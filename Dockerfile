@@ -27,7 +27,7 @@ RUN apt update && apt install -y curl
 # Копируем и устанавливаем зависимости
 COPY requirements.txt .
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements/prod.txt
 
 # Копируем все файлы проекта в контейнер
 COPY . .

@@ -1,4 +1,17 @@
 Django>=5.0,<6.0
 djangorestframework
+djangorestframework_simplejwt
+django-cors-headers
+django-filter
 python-dotenv
 psycopg2-binary
+PyJWT
+Markdown
+pillow
+sqlparse
+asgiref
+pytz
+inflection
+
+# Swagger / Документация
+drf-yasg

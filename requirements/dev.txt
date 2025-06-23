@@ -1,11 +1,44 @@
 -r base.txt
-flake8
-mypy
+
+# Linting & type checking
 black
+flake8
 isort
+mypy
+mypy_extensions
+types-PyYAML
 django-stubs
+django-stubs-ext
+
+# Pre-commit hooks
+pre_commit
+cfgv
+identify
+nodeenv
+virtualenv
+pathspec
+
+# Testing
 pytest
 pytest-django
 pytest-cov
+coverage
+
+# IPython shell & debug tools
 ipython
-pre_commit
+jedi
+parso
+prompt_toolkit
+Pygments
+stack-data
+pure_eval
+decorator
+executing
+asttokens
+matplotlib-inline
+traitlets
+platformdirs
+pexpect
+ptyprocess
+wcwidth
+ipython_pygments_lexers

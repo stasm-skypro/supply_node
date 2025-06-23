@@ -178,3 +178,7 @@ LOGGING = {
 }
 # Создаём папки для логов, если их нет
 os.makedirs(os.path.join(BASE_DIR, "supply/logs"), exist_ok=True)
+
+STATIC_URL = "static/"  # -- хранит исходные статические файлы проекта
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # -- собирает все статические файлы перед деплоем
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
