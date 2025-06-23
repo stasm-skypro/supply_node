@@ -221,7 +221,6 @@ class NodeProductListAPIView(generics.ListAPIView):
         :return: Список продуктов.
         """
         node_id = self.kwargs.get("node_id")
-        print("node_id", node_id)
         if not Node.objects.filter(pk=node_id).exists():
             raise NotFound(f"Узел с id={node_id} не найден.")
         return Product.objects.filter(owner_id=node_id)

@@ -25,7 +25,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]  # -- Стоковые приложения
-INSTALLED_APPS += ["rest_framework", "rest_framework_simplejwt", "drf_yasg", "corsheaders"]  # -- Сторонние приложения
+INSTALLED_APPS += [
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "drf_yasg",
+    "corsheaders",
+]  # -- Сторонние приложения
 INSTALLED_APPS += ["supply", "user"]  # -- Пользовательские приложения
 
 MIDDLEWARE = [
@@ -113,8 +118,8 @@ REST_FRAMEWORK = {
     # Настройка фильтрации данных
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
-        "rest_framework.filters.SearchFilter",
-        "rest_framework.filters.OrderingFilter",
+        # "rest_framework.filters.SearchFilter",  # Раскомментировать эти поля, если нужно автоматически отображать
+        # "rest_framework.filters.OrderingFilter",  # OpenAPI doc поля поиска и сортировки
     ],
 }
 SIMPLE_JWT = {
@@ -134,5 +139,5 @@ SWAGGER_SETTINGS = {
     },
 }
 
-# Убирает предупреждение в консоли при запуске pytest - теперь (без точки): GET /swaggerjson
+# Убирает предупреждение в консоли при запуске pytest - теперь (без точки): ``GET /swaggerjson``
 SWAGGER_USE_COMPAT_RENDERERS = False
