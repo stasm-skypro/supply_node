@@ -6,6 +6,8 @@
 :mod:`rest_framework.generics` для выполнения операций CRUD
 (Create, Retrieve, Update, Delete) над моделью :class:`supply.models.Node`.
 """
+import logging
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.exceptions import NotFound
@@ -13,6 +15,8 @@ from rest_framework.permissions import IsAuthenticated
 
 from supply.models import Node, Product
 from supply.serializers import NodeSerializer, ProductSerializer
+
+logger = logging.getLogger(__name__)
 
 
 # -- CREATE
@@ -29,6 +33,10 @@ class NodeCreateAPIView(generics.CreateAPIView):
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        logger.info("Узел поставки создан: id=%s name='%s'", instance.id, instance.name)
 
 
 # -- LIST с фильтрацией по стране
@@ -98,7 +106,8 @@ class NodeUpdateAPIView(generics.UpdateAPIView):
         """
         validated_data = serializer.validated_data
         validated_data.pop("debt_to_supplier", None)  # запрет на изменение
-        serializer.save()
+        instance = serializer.save()
+        logger.info("Узел поставки обновлён: id=%s name='%s'", instance.id, instance.name)
 
 
 # -- DESTROY
@@ -116,6 +125,10 @@ class NodeDestroyAPIView(generics.DestroyAPIView):
     serializer_class = NodeSerializer
     permission_classes = [IsAuthenticated]
 
+    def perform_destroy(self, instance):
+        logger.info("Узел поставки удалён: id=%s name='%s'", instance.id, instance.name)
+        super().perform_destroy(instance)
+
 
 class ProductCreateAPI(generics.CreateAPIView):
     """
@@ -130,6 +143,10 @@ class ProductCreateAPI(generics.CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        logger.info("Продукт создан: id=%s name='%s'", instance.id, instance.name)
 
 
 class ProductListAPI(generics.ListAPIView):
@@ -180,6 +197,10 @@ class ProductUpdateAPIView(generics.UpdateAPIView):
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
 
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        logger.info("Продукт обновлён: id=%s name='%s'", instance.id, instance.name)
+
 
 class ProductDestroyAPIView(generics.DestroyAPIView):
     """
@@ -194,6 +215,10 @@ class ProductDestroyAPIView(generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_destroy(self, instance):
+        logger.info("Продукт удалён: id=%s name='%s'", instance.id, instance.name)
+        super().perform_destroy(instance)
 
 
 class NodeProductListAPIView(generics.ListAPIView):

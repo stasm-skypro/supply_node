@@ -2,6 +2,7 @@
 Django settings for config project.
 """
 
+import os
 import sys
 from datetime import timedelta
 from pathlib import Path
@@ -141,3 +142,39 @@ SWAGGER_SETTINGS = {
 
 # Убирает предупреждение в консоли при запуске pytest - теперь (без точки): ``GET /swaggerjson``
 SWAGGER_USE_COMPAT_RENDERERS = False
+
+# Настройка логера
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {"format": "%(asctime)s - %(name)s - %(levelname)s: %(message)s"},
+    },
+    "handlers": {
+        "supply_file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "supply/logs/reports.log"),
+            "encoding": "utf-8",
+            "formatter": "verbose",
+        },
+        "console": {  # fallback-обработчик ошибок логирования (логер самого логера :-))
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "supply": {
+            "handlers": ["supply_file"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+        "root": {
+            "handlers": ["console"],
+            "level": "WARNING",
+        },
+    },
+}
+# Создаём папки для логов, если их нет
+os.makedirs(os.path.join(BASE_DIR, "supply/logs"), exist_ok=True)
