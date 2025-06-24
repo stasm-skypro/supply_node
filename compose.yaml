@@ -1,0 +1,57 @@
+services:
+
+  db:
+    image: postgres:17-alpine
+    container_name: psgr
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=${DB_HOST}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - dbnet
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_NAME}" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+
+  web:
+    build: .
+    image: web
+    container_name: web
+    working_dir: /app
+    command: /entrypoint-web.sh
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    networks:
+      - dbnet
+    depends_on:
+      - db
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/web_heltz" ]
+      interval: 10s
+      retries: 3
+      start_period: 30s
+      timeout: 5s
+
+networks:
+  dbnet:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  static_volume:
+  redis-data:

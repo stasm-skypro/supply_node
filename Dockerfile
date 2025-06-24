@@ -25,9 +25,9 @@ RUN apt-get update && apt-get install -y netcat-traditional && rm -rf /var/lib/a
 RUN apt update && apt install -y curl
 
 # Копируем и устанавливаем зависимости
-COPY requirements.txt .
+COPY requirements/ requirements/
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements/prod.txt
+    pip install --no-cache-dir -r requirements/base.txt
 
 # Копируем все файлы проекта в контейнер
 COPY . .

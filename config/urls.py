@@ -4,7 +4,7 @@ URL configuration for config project.
 """
 
 from django.contrib import admin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import include, path
 
 from drf_yasg import openapi
@@ -26,6 +26,10 @@ schema_view = get_schema_view(
 )
 
 
+def web_healthcheck(request):
+    return HttpResponse("ok")
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     #
@@ -39,4 +43,8 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),  # login/logout через API в браузере
     #
     path("supply/", include("supply.urls", namespace="supply")),
+]
+
+urlpatterns += [
+    path("web_heltz", web_healthcheck),  # Заглушка для docker compose web helathcheck
 ]
