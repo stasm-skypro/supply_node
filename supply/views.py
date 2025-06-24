@@ -48,6 +48,9 @@ class NodeListAPIView(generics.ListAPIView):
     Наследуется от :class:`rest_framework.generics.ListAPIView`.
 
     Поддерживает фильтрацию по полю ``country``.
+    Клиент отправляет GET-запрос на эндпоинт ``/supply/nodes/?country=KZ``,
+    получает в ответ список узлов сети в Казахстане.
+
     Требует аутентификации пользователя.
     """
 
