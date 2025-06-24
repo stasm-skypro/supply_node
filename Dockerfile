@@ -34,7 +34,6 @@ COPY . .
 
 # Копируем скрипты и даём права на исполнение
 COPY entrypoint-web.sh /entrypoint-web.sh
-COPY entrypoint-celery.sh /entrypoint-celery.sh
 RUN chmod +x /entrypoint-*.sh
 
 # Создаем директорию для статики от имени root и назначаем права
