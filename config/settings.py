@@ -139,6 +139,8 @@ SWAGGER_SETTINGS = {
             "description": "JWT Authorization header using the Bearer scheme. Example: 'Bearer your_token'",
         }
     },
+    "USE_SESSION_AUTH": False,
+    "PERSIST_AUTH": True,
 }
 
 # Убирает предупреждение в консоли при запуске pytest - теперь (без точки): ``GET /swaggerjson``
