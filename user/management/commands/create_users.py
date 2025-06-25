@@ -77,6 +77,19 @@ class Command(BaseCommand):
                 "date_joined": make_aware(datetime(2025, 5, 18, 10, 20, 0)),
                 "last_login": make_aware(datetime(2025, 6, 19, 10, 20, 0)),
             },
+            {
+                "email": "stasm226@gmail.com",
+                "password": "!@WQCnfybckfd1",
+                "first_name": "Станислав",
+                "last_name": "Маяцкий",
+                "phone": "+77022262280",
+                "role": "admin",
+                "is_active": True,
+                "is_staff": True,
+                "is_superuser": True,
+                "date_joined": make_aware(datetime(2025, 6, 20, 10, 20, 0)),
+                "last_login": make_aware(datetime(2025, 6, 25, 10, 20, 0)),
+            },
         ]
 
         for data in users_data:
