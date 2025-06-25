@@ -1,3 +1,4 @@
+import logging
 from decimal import Decimal
 
 from django.contrib import admin
@@ -6,10 +7,17 @@ from django.utils.safestring import mark_safe
 
 from supply.models import Node, Product
 
+logger = logging.getLogger(__name__)
+
 
 @admin.action(description="Очистить задолженность перед поставщиком")
 def clear_debt(modeladmin, request, queryset):
-    queryset.update(debt_to_supplier=Decimal("0.00"))
+    updated = queryset.update(debt_to_supplier=Decimal("0.00"))
+
+    logger.info(
+        f"Админ-действие: Администратор сети {request.user} очистил задолженность "
+        f"у {updated} объектов Node. ID: {[obj.id for obj in queryset]}"
+    )
 
 
 @admin.register(Node)
@@ -34,7 +42,10 @@ class NodeAdmin(admin.ModelAdmin):
         "debt_to_supplier",
         "created_at",
     )
-    list_filter = ("city",)
+    list_filter = (
+        "country",
+        "city",
+    )
     search_fields = ("name", "email", "phone")
     actions = [clear_debt]
 
