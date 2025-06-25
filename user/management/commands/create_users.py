@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.utils.timezone import make_aware
 
 from user.models import User
 
@@ -21,8 +22,8 @@ class Command(BaseCommand):
                 "is_active": True,
                 "is_staff": False,
                 "is_superuser": False,
-                "date_joined": datetime(2025, 6, 8, 9, 0, 0),
-                "last_login": datetime(2025, 6, 18, 10, 0, 0),
+                "date_joined": make_aware(datetime(2025, 6, 8, 9, 0, 0)),
+                "last_login": make_aware(datetime(2025, 6, 18, 10, 0, 0)),
             },
             {
                 "email": "petrova@example.com",
@@ -34,8 +35,8 @@ class Command(BaseCommand):
                 "is_active": False,
                 "is_staff": False,
                 "is_superuser": False,
-                "date_joined": datetime(2025, 6, 8, 10, 5, 0),
-                "last_login": datetime(2025, 6, 19, 10, 5, 0),
+                "date_joined": make_aware(datetime(2025, 6, 8, 10, 5, 0)),
+                "last_login": make_aware(datetime(2025, 6, 19, 10, 5, 0)),
             },
             {
                 "email": "sidorov@example.com",
@@ -47,8 +48,8 @@ class Command(BaseCommand):
                 "is_active": True,
                 "is_staff": False,
                 "is_superuser": False,
-                "date_joined": datetime(2025, 6, 1, 10, 10, 0),
-                "last_login": datetime(2025, 6, 20, 10, 10, 0),
+                "date_joined": make_aware(datetime(2025, 6, 1, 10, 10, 0)),
+                "last_login": make_aware(datetime(2025, 6, 20, 10, 10, 0)),
             },
             {
                 "email": "kuznetsova@example.com",
@@ -60,8 +61,8 @@ class Command(BaseCommand):
                 "is_active": True,
                 "is_staff": False,
                 "is_superuser": False,
-                "date_joined": datetime(2025, 5, 18, 10, 15, 0),
-                "last_login": datetime(2025, 6, 18, 15, 10, 0),
+                "date_joined": make_aware(datetime(2025, 5, 18, 10, 15, 0)),
+                "last_login": make_aware(datetime(2025, 6, 18, 15, 10, 0)),
             },
             {
                 "email": "ermek@example.com",
@@ -73,8 +74,8 @@ class Command(BaseCommand):
                 "is_active": False,
                 "is_staff": False,
                 "is_superuser": False,
-                "date_joined": datetime(2025, 5, 18, 10, 20, 0),
-                "last_login": datetime(2025, 6, 19, 10, 20, 0),
+                "date_joined": make_aware(datetime(2025, 5, 18, 10, 20, 0)),
+                "last_login": make_aware(datetime(2025, 6, 19, 10, 20, 0)),
             },
         ]
 
