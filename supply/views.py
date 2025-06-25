@@ -226,9 +226,9 @@ class ProductDestroyAPIView(generics.DestroyAPIView):
 
 class NodeProductListAPIView(generics.ListAPIView):
     """
-    Представление для получения списка продуктов, принадлежащих конкретному узлу сети.
+    Представление для получения списка продуктов, принадлежащих конкретному объекту сети сети.
 
-    Обрабатывает GET-запросы по адресу ``/nodes/{node_id}/products/``.
+    Обрабатывает GET-запросы по адресу ``/supply/nodes/{node_id}/products/``.
     Возвращает список всех продуктов, у которых поле ``owner`` соответствует переданному ``node_id``.
 
     Наследуется от :class:`rest_framework.generics.ListAPIView`.
@@ -245,7 +245,7 @@ class NodeProductListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         """
-        Получает список продуктов, принадлежащих указанному узлу.
+        Получает список продуктов, принадлежащих указанному объекту сети.
         :return: Список продуктов.
         """
         node_id = self.kwargs.get("node_id")
@@ -256,10 +256,10 @@ class NodeProductListAPIView(generics.ListAPIView):
 
 class NodeProductRetrieveAPIView(generics.RetrieveAPIView):
     """
-    Представление для получения конкретного продукта, принадлежащего узлу.
+    Представление для получения конкретного продукта, принадлежащего объекту сети.
 
-    Обрабатывает GET-запросы по адресу ``/nodes/{node_id}/products/{product_id}/``.
-    Возвращает объект продукта, если он принадлежит указанному узлу.
+    Обрабатывает GET-запросы по адресу ``supply/nodes/{node_id}/products/{product_id}/``.
+    Возвращает объект продукта, если он принадлежит указанному объекту сети.
 
     Наследуется от :class:`rest_framework.generics.RetrieveAPIView`.
 
@@ -281,7 +281,7 @@ class NodeProductRetrieveAPIView(generics.RetrieveAPIView):
 
         :return: Экземпляр продукта, если найден.
         :rtype: supply.models.Product
-        :raises NotFound: Если продукт не найден или не принадлежит указанному узлу.
+        :raises NotFound: Если продукт не найден или не принадлежит указанному объекту сети.
         """
         node_id = self.kwargs.get("node_id")
         product_id = self.kwargs.get("product_id")

@@ -12,15 +12,22 @@ class RegisterAPIView(CreateAPIView):
 
     Атрибуты:
     - email (str): Email пользователя
+    - phone (str): Контактный номер телефона пользователя
+    - first_name (str): Имя пользователя
+    - last_name (str): Фамилия пользователя
     - password (str): Пароль не менее 8 символов
+    - password_confirmation (str): Подтверждение пароля
 
     Клиент отправляет POST-запрос на эндпоинт регистрации /register/,
     передавая JSON:
     ``json
     {
         "email": "user@example.com",
-        "password": "secure1234",
-        "password_confirmation": "secure1234"
+        "phone": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "password": "string",
+        "password_confirmation": "string"
     }``
 
     API возвращает успешный ответ:

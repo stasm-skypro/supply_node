@@ -10,8 +10,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     """
     Сериализатор для регистрации пользователя
     Атрибуты:
-    - email (str): Электронная почта пользователя
-    - password (str): Пароль пользователя
+    - email (str): Email пользователя
+    - phone (str): Контактный номер телефона пользователя
+    - first_name (str): Имя пользователя
+    - last_name (str): Фамилия пользователя
+    - password (str): Пароль не менее 8 символов
+    - password_confirmation (str): Подтверждение пароля
     """
 
     # Чтобы не было попыток зарегистрировать одного и того же пользователя дважды
@@ -46,7 +50,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         """
         Говорит сериализатору, что он работает с моделью User, и обрабатывает поля, которые нужны при регистрации:
-        'email', 'phone', 'first_name', 'last_name', 'role', 'password', 'password_confirmation'
+        'email', 'phone', 'first_name', 'last_name', 'password', 'password_confirmation'
         """
 
         model = User
@@ -70,6 +74,14 @@ class UserSerializer(serializers.ModelSerializer):
     Представляет собой универсальный сериализатор пользователя
     Атрибуты:
     - id (int): Уникальный идентификатор пользователя
+    - email (str): Электронная почта пользователя
+    - phone (str): Контактный номер телефона пользователя
+    - first_name (str): Имя пользователя
+    - last_name (str): Фамилия пользователя
+    - role (str): Роль пользователя в системе
+    - is_active (bool): Флаг активности пользователя
+    - is_staff (bool): Флаг доступа к административной панели Django
+    - is_superuser (bool): Флаг суперпользователя
     """
 
     class Meta:

@@ -138,7 +138,7 @@ class Product(models.Model):
 
     # Владелец продукта — узел сети
     owner = models.ForeignKey(
-        Node, on_delete=models.CASCADE, related_name="products", verbose_name="Поставщик"
+        Node, on_delete=models.CASCADE, related_name="products", verbose_name="Владелец"
     )  # type: ignore[var-annotated]
 
     def __str__(self) -> str:
