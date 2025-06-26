@@ -79,7 +79,7 @@ class Command(BaseCommand):
             },
             {
                 "email": "stasm226@gmail.com",
-                "password": "!@WQCnfybckfd1",
+                "password": "12345678",
                 "first_name": "Станислав",
                 "last_name": "Маяцкий",
                 "phone": "+77022262280",

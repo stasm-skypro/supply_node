@@ -43,7 +43,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-MIDDLEWARE += ["corsheaders.middleware.CorsMiddleware"]  # -- Сторонние приложения
+MIDDLEWARE += [
+    "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+]  # -- Сторонние приложения
 
 ROOT_URLCONF = "config.urls"
 
@@ -185,3 +188,6 @@ os.makedirs(os.path.join(BASE_DIR, "supply/logs"), exist_ok=True)
 STATIC_URL = "static/"  # -- хранит исходные статические файлы проекта
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]  # -- собирает все статические файлы перед деплоем
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# Чтобы статика отдавалась даже при DEBUG=False
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
