@@ -51,6 +51,7 @@ class UserManager(BaseUserManager):
         """
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("role", self.model.Roles.ADMIN)
 
         if not extra_fields.get("is_staff"):
             raise ValueError("У суперпользователя должно быть is_staff=True.")
