@@ -60,7 +60,7 @@ POSTGRES_PORT=5432
 ### 3. Соберите и запустите проект
 
 ```bash
-docker compose up --build -d
+docker compose build --no-cache && docker compose up
 ```
 
 Приложение будет доступно по адресу `http://127.0.0.1:8000`
