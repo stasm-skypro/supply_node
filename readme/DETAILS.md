@@ -166,7 +166,7 @@
     - Создавать объект сети поставок (`POST /supply/nodes/`)
     - Получать один объект сети поставок (`GET /supply/nodes/{id}`)
     - Редактировать объект сети поставок (`PUT/PATCH /supply/nodes/{id}`)
-    - Удалять объект сети поставок (`DELETE /supply/nodes/{id}`)))
+    - Удалять объект сети поставок (`DELETE /supply/nodes/{id}`)
     - Получать список продуктов, принадлежащих конкретному объекту сети (`GET /supply/nodes/{node_id}/products/`)
     - Получать конкретный продукт, принадлежащий конкретному объекту сети (
       `GET /supply/nodes/{node_id}/products/{product_id}/`)
@@ -174,4 +174,4 @@
     - Создавать продукт сети поставок (`POST /supply/products/`)
     - Получать один продукт сети поставок (`GET /supply/products/{id}`)
     - Редактировать продукт сети поставок (`PUT/PATCH /supply/products/{id}`)
-    - Удалять объект продукт поставок (`DELETE /supply/products/{id}`)))
+    - Удалять объект продукт поставок (`DELETE /supply/products/{id}`)
