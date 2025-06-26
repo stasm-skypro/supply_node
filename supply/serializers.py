@@ -31,6 +31,11 @@ class NodeSerializer(serializers.ModelSerializer):
         :created_at: (datetime) Время создания записи (только для чтения).
     """
 
+    level = serializers.SerializerMethodField()
+
+    def get_level(self, obj):
+        return obj.level
+
     class Meta:
         """
         Мета-класс для настройки сериализатора.
@@ -42,7 +47,7 @@ class NodeSerializer(serializers.ModelSerializer):
 
         model = Node
         fields = "__all__"
-        read_only_fields = ["debt_to_supplier"]
+        read_only_fields = ["debt_to_supplier", "level"]
 
     def update(self, instance, validated_data):
         """

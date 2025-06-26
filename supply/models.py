@@ -82,7 +82,8 @@ class Node(models.Model):
         """
         return self.name
 
-    def get_level(self) -> int:
+    @property
+    def level(self) -> int:
         """
         Вычисляет уровень звена в иерархии.
 
